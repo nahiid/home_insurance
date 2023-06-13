@@ -1,0 +1,51 @@
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, include = FALSE}
+data <- read.csv("./data/home_insurance.csv")
+```
+
+```{r, include = FALSE}
+head(data)
+```
+
+```{r, include = FALSE}
+unique(data$RISK_RATED_AREA_B)
+```
+
+```{r, include = FALSE}
+
+original_dataset <- read.csv("./data/home_insurance.csv")
+
+#Identify the columns to remove
+columns_to_remove <- c("QUOTE_DATE", "COVER_START", "P1_PT_EMP_STATUS", "CLERICAL", "AD_BUILDINGS", "AD_CONTENTS", 
+"AD_CONTENTS", "RISK_RATED_AREA_C", "SUM_INSURED_CONTENTS", "CONTENTS_COVER", "P1_POLICY_REFUSED", "LISTED", "OWNERSHIP_TYPE", "PAYING_GUESTS", "PROP_TYPE", "CAMPAIGN_DESC", "PAYMENT_METHOD", "PAYMENT_FREQUENCY", "LEGAL_ADDON_PRE_REN", "LEGAL_ADDON_POST_REN", "HOME_EM_ADDON_PRE_REN", "HOME_EM_ADDON_POST_REN", "KEYCARE_ADDON_PRE_REN", "KEYCARE_ADDON_POST_REN", "HP1_ADDON_PRE_REN", "HP1_ADDON_POST_REN", "HP2_ADDON_PRE_REN", "HP2_ADDON_POST_REN", "HP3_ADDON_PRE_REN", "HP3_ADDON_POST_REN", "MTA_FLAG", "MTA_FAP", "MTA_APRP", "MTA_DATE",   "PAYING_GUESTS")
+
+#Remove the specified columns
+dataset <- original_dataset[, !(names(original_dataset) %in% columns_to_remove)]
+
+# Step 4: Save the updated dataset to a new file
+write.csv(dataset, "updated_data.csv", row.names = FALSE)
+
+```
+
+
+```{r, include = FALSE}
+head(dataset)
+```
+
+```{r, include = FALSE}
+head(data)
+```
+
+```{r, include = FALSE}
+head(data)
+```
+
+```{r, include = FALSE}
+head(data)
+```
