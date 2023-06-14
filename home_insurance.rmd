@@ -29,7 +29,7 @@ columns_to_remove <- c("QUOTE_DATE", "COVER_START", "P1_PT_EMP_STATUS", "CLERICA
 dataset <- original_dataset[, !(names(original_dataset) %in% columns_to_remove)]
 
 # Step 4: Save the updated dataset to a new file
-write.csv(dataset, "updated_data.csv", row.names = FALSE)
+write.csv(dataset, "./data/updated_data.csv", row.names = FALSE)
 
 ```
 
@@ -39,11 +39,13 @@ head(dataset)
 ```
 
 ```{r, include = FALSE}
-head(data)
+for (i in 1:ncol(dataset)){
+  print(unique(dataset[,i]))
+}
 ```
 
 ```{r, include = FALSE}
-head(data)
+
 ```
 
 ```{r, include = FALSE}
