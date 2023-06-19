@@ -36,6 +36,7 @@ write.csv(dataset, "./data/updated_data.csv", row.names = FALSE)
 
 ```{r, include = FALSE}
 head(dataset)
+dim(dataset)
 ```
 
 ```{r, include = FALSE}
@@ -45,9 +46,35 @@ for (i in 1:ncol(dataset)){
 ```
 
 ```{r, include = FALSE}
+checkRow <- function(row){
+  any(row == "NA"| row == "NULL" | row == "" | row == " ")
+  return(TRUE)
+}
+
+for (i in 1:nrow(dataset)){
+  if(checkRow(dataset[i,1])){
+    dataset <- dataset[-i,]
+  }
+}
 
 ```
 
 ```{r, include = FALSE}
-head(data)
+dataset_clean <- dataset[complete.cases(dataset),]
+dim(dataset_clean)
+dim(dataset)
+```
+
+```{r, include = FALSE}
+
+```
+
+```{r, include = FALSE}
+
+```
+
+```{r, include = FALSE}
+dataset_clean <- dataset[complete.cases(dataset),]
+dim(dataset_clean)
+dim(dataset)
 ```
