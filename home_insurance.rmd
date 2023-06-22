@@ -68,6 +68,7 @@ unique(dataset_clean$P1_DOB)
 
 ```
 
+##Change format of DOB
 
 ```{r, include = FALSE}
 # Load the lubridate package
@@ -103,12 +104,11 @@ print(sorted_numbers)
 
 ```{r, include = FALSE}
 # Define the ranges and corresponding AVGsalary values
-ranges <- c(1890, 1895, 1900, 1905, 1910, 1915, 1920, 1925, 1930, 1935, 1940, 1945, 1950, 1955, 1960, 1965, 1970, 1975, 1980, 1985, 1990)  # Add more ranges as needed
+ranges <- c(1890, 1895, 1900, 1905, 1910, 1915, 1920, 1925, 1930, 1935, 1940, 1945, 1950, 1955, 1960, 1965, 1970, 1975, 1980, 1985, 1990)
 
 # Corresponding AVGsalary values for each range
 AVGsalary_values <- c(200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10)
 
-findInterval(dataset$year, ranges) + 1
 ```
 
 ```{r, include = FALSE}
@@ -176,6 +176,39 @@ dataset_clean$AVGsalary <- ifelse(
 )
 
 # Print the modified dataset
-print(dataset_clean)
+print(dataset_clean$AVGsalary)
 
+```
+
+```{r, include = FALSE}
+final_dataset <- dataset_clean[, !(colnames(dataset_clean) %in% "P1_DOB")]
+final_dataset <- dataset_clean[, !(colnames(dataset_clean) %in% "Police")]
+write.csv(final_dataset, "./data/final_dataset.csv", row.names = FALSE)
+```
+
+```{r, include = FALSE}
+final_dataset <- read.csv("./data/final_dataset.csv")
+```
+
+```{r, include = FALSE}
+# Specify the column names that need to be changed
+columns_to_change <- c("CLAIM3YEARS", "BUS_USE", "BUILDINGS_COVER", "APPR_LOCKS", "APPR_ALARM", "FLOODING", "NEIGH_WATCH", "SAFE_INSTALLED", "SEC_DISC_REQ", "SUBSIDENCE", "GARDEN_ADDON_PRE_REN", "GARDEN_ADDON_POST_REN")  
+
+#  replace 'Y' with 1 and 'N' with 0
+for (col in columns_to_change) {
+  final_dataset[, col] <- ifelse(final_dataset[, col] == 'Y', 1, 0)
+}
+final_dataset$P1_SEX <- ifelse(final_dataset$P1_SEX == 'M', 0, 1)
+```
+
+```{r, include = FALSE}
+ 
+```
+
+```{r, include = FALSE}
+ 
+```
+
+```{r, include = FALSE}
+ 
 ```
