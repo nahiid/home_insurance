@@ -46,20 +46,6 @@ for (i in 1:ncol(dataset)){
 ```
 
 ```{r, include = FALSE}
-checkRow <- function(row){
-  any(row == "NA"| row == "NULL" | row == "" | row == " ")
-  return(TRUE)
-}
-
-for (i in 1:nrow(dataset)){
-  if(checkRow(dataset[i,1])){
-    dataset <- dataset[-i,]
-  }
-}
-
-```
-
-```{r, include = FALSE}
 dataset_clean <- dataset[complete.cases(dataset),]
 dim(dataset_clean)
 dim(dataset)
@@ -70,11 +56,46 @@ dim(dataset)
 ```
 
 ```{r, include = FALSE}
-
-```
-
-```{r, include = FALSE}
 dataset_clean <- dataset[complete.cases(dataset),]
 dim(dataset_clean)
 dim(dataset)
+write.csv(dataset_clean, "./data/clean_data.csv", row.names = FALSE)
+```
+
+```{r, include = FALSE}
+dataset_clean <- read.csv("./data/clean_data.csv")
+unique(dataset_clean$P1_DOB)
+
+```
+
+
+```{r, include = FALSE}
+# Load the lubridate package
+library(lubridate)
+
+# Convert the date column to a Date object
+dataset_clean$P1_DOB <- dmy(dataset_clean$P1_DOB)  # Assumes day-month-year format
+
+unique(dataset_clean$P1_DOB)
+
+```
+
+
+```{r, include = FALSE}
+# Extract the year from the date column
+dataset_clean$year <- year(dataset_clean$P1_DOB)
+
+# Print the data frame with the extracted year
+unique(dataset_clean$year)
+```
+
+
+
+```{r, include = FALSE}
+
+```
+
+
+```{r, include = FALSE}
+
 ```
