@@ -202,7 +202,14 @@ final_dataset$P1_SEX <- ifelse(final_dataset$P1_SEX == 'M', 0, 1)
 ```
 
 ```{r, include = FALSE}
- 
+# Assuming you're using the dplyr library
+library(dplyr)
+
+# Remove the 'p1DOB' column from the 'final_dataset' dataframe
+final_dataset <- final_dataset %>% select(-'P1_DOB')
+
+final_dataset <- final_dataset[!(final_dataset$P1_EMP_STATUS %in% c("A", "C", "I", "N")), ]
+
 ```
 
 ```{r, include = FALSE}
