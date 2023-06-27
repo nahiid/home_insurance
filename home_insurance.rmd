@@ -213,9 +213,25 @@ final_dataset <- final_dataset[!(final_dataset$P1_EMP_STATUS %in% c("A", "C", "I
 ```
 
 ```{r, include = FALSE}
- 
+ unique(final_dataset$P1_EMP_STATUS)
 ```
 
 ```{r, include = FALSE}
- 
+ library(dplyr)
+library(tidyr)
+
+final_dataset <- final_dataset %>%
+  mutate(P1_EMP_STATUS = factor(P1_EMP_STATUS, levels = c("R", "E", "S", "H", "U", "F", "V"))) %>%
+  mutate(P1_EMP_STATUS = as.character(P1_EMP_STATUS)) %>%
+  mutate_all(~ifelse(is.na(.), "Unknown", .)) # Replace any NA values with "Unknown"
+
+final_dataset <- final_dataset %>%
+  mutate(R_emp_status = as.integer(P1_EMP_STATUS == "R"),
+         E_emp_status = as.integer(P1_EMP_STATUS == "E"),
+         S_emp_status = as.integer(P1_EMP_STATUS == "S"),
+         H_emp_status = as.integer(P1_EMP_STATUS == "H"),
+         U_emp_status = as.integer(P1_EMP_STATUS == "U"),
+         F_emp_status = as.integer(P1_EMP_STATUS == "F"),
+         V_emp_status = as.integer(P1_EMP_STATUS == "V")) %>%
+  select(-P1_EMP_STATUS)
 ```
