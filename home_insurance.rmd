@@ -268,8 +268,39 @@ final_dataset <- final_dataset %>%
 ```
 
 ```{r, include = FALSE}
+library(dplyr)
+library(tidyr)
+
+final_dataset <- final_dataset %>%
+  mutate(OCC_STATUS = factor(OCC_STATUS, levels = c("PH", "UN", "LP", "HH", "WD", "WE", "OT"))) %>%
+  mutate(OCC_STATUS = as.character(OCC_STATUS)) %>%
+  mutate_all(~ifelse(is.na(.), "Unknown", .)) # Replace any NA values with "Unknown"
+
+final_dataset <- final_dataset %>%
+  mutate(PH_occ_status = as.integer(OCC_STATUS == "PH"),
+         UN_occ_status = as.integer(OCC_STATUS == "UN"),
+         LP_occ_status = as.integer(OCC_STATUS == "LP"),
+         HH_occ_status = as.integer(OCC_STATUS == "HH"),
+         WD_occ_status = as.integer(OCC_STATUS == "WD"),
+         WE_occ_status = as.integer(OCC_STATUS == "WE"),
+         OT_occ_status = as.integer(OCC_STATUS == "OT")) %>%
+  select(-OCC_STATUS)
 ```
 
 
 ```{r, include = FALSE}
+library(dplyr)
+library(tidyr)
+
+final_dataset <- final_dataset %>%
+  mutate(POL_STATUS = factor(POL_STATUS, levels = c("Live", "Cancelled", "Lapsed", "Unknown"))) %>%
+  mutate(POL_STATUS = as.character(POL_STATUS)) %>%
+  mutate_all(~ifelse(is.na(.), "Unknown", .)) # Replace any NA values with "Unknown"
+
+final_dataset <- final_dataset %>%
+  mutate(Live_Pol_status = as.integer(POL_STATUS == "Live"),
+         Cancelled_Pol_status = as.integer(POL_STATUS == "Cancelled"),
+         Lapsed_Pol_status = as.integer(POL_STATUS == "Lapsed"),
+         Unknown_Pol_status = as.integer(POL_STATUS == "Unknown")) %>%
+  select(-POL_STATUS)
 ```
