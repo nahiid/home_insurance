@@ -304,3 +304,33 @@ final_dataset <- final_dataset %>%
          Unknown_Pol_status = as.integer(POL_STATUS == "Unknown")) %>%
   select(-POL_STATUS)
 ```
+
+
+```{r, include = FALSE}
+
+library(tagi)
+# Package loading:
+require(mvtnorm)
+require(randtoolbox)
+
+# #set seed
+set.seed(123)
+
+# Specific Initialization
+# Define the neural network properties, such as the number of epochs, activation function, etc.
+nobs <- nrow(final_dataset)
+ratio <- 0.9
+# Input features
+x <- final_dataset[,!(names(data) %in% c("AVGsalary"))]
+# Output targets
+# Assuming 'data' is your dataset with the AvgSalary column
+y <- as.matrix(final_dataset$AVGsalary)
+nx <- ncol(x)
+ny <- 1
+
+x <- sapply(x, as.numeric)
+library(dplyr)
+
+```
+
+
