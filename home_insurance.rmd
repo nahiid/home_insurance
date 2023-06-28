@@ -235,3 +235,41 @@ final_dataset <- final_dataset %>%
          V_emp_status = as.integer(P1_EMP_STATUS == "V")) %>%
   select(-P1_EMP_STATUS)
 ```
+
+```{r, include = FALSE}
+unique(final_dataset$P1_MAR_STATUS)
+```
+
+```{r, include = FALSE}
+# Create a vector of values to exclude
+excluded_values <- c("A", "C", "B", "O")
+
+# Delete rows with excluded values
+final_dataset <- final_dataset[!(final_dataset$P1_MAR_STATUS %in% excluded_values), ]
+```
+
+```{r, include = FALSE}
+library(dplyr)
+library(tidyr)
+
+final_dataset <- final_dataset %>%
+  mutate(P1_MAR_STATUS = factor(P1_MAR_STATUS, levels = c("M", "D", "P", "S", "W", "N"))) %>%
+  mutate(P1_MAR_STATUS = as.character(P1_MAR_STATUS)) %>%
+  mutate_all(~ifelse(is.na(.), "Unknown", .)) # Replace any NA values with "Unknown"
+
+final_dataset <- final_dataset %>%
+  mutate(M_Mar_status = as.integer(P1_MAR_STATUS == "M"),
+         D_Mar_status = as.integer(P1_MAR_STATUS == "D"),
+         P_Mar_status = as.integer(P1_MAR_STATUS == "P"),
+         S_Mar_status = as.integer(P1_MAR_STATUS == "S"),
+         W_Mar_status = as.integer(P1_MAR_STATUS == "W"),
+         N_Mar_status = as.integer(P1_MAR_STATUS == "N")) %>%
+  select(-P1_MAR_STATUS)
+```
+
+```{r, include = FALSE}
+```
+
+
+```{r, include = FALSE}
+```
