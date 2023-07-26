@@ -9,16 +9,9 @@ knitr::opts_chunk$set(
 data <- read.csv("./data/home_insurance.csv")
 ```
 
-```{r, include = FALSE}
-head(data)
-```
+##Removing Columns from the original dataset:
 
 ```{r, include = FALSE}
-unique(data$RISK_RATED_AREA_B)
-```
-
-```{r, include = FALSE}
-
 original_dataset <- read.csv("./data/home_insurance.csv")
 
 #Identify the columns to remove
@@ -29,48 +22,24 @@ columns_to_remove <- c("QUOTE_DATE", "COVER_START", "P1_PT_EMP_STATUS", "CLERICA
 dataset <- original_dataset[, !(names(original_dataset) %in% columns_to_remove)]
 
 # Step 4: Save the updated dataset to a new file
-write.csv(dataset, "./data/updated_data.csv", row.names = FALSE)
-
+# write.csv(dataset, "./data/updated_data.csv", row.names = FALSE)
 ```
 
-
-```{r, include = FALSE}
-head(dataset)
-dim(dataset)
-```
-
-```{r, include = FALSE}
-for (i in 1:ncol(dataset)){
-  print(unique(dataset[,i]))
-}
-```
-
+##Creates dataset_clean by removing rows with missing values from the original dataset.
 ```{r, include = FALSE}
 dataset_clean <- dataset[complete.cases(dataset),]
-dim(dataset_clean)
-dim(dataset)
-```
-
-```{r, include = FALSE}
-
-```
-
-```{r, include = FALSE}
-dataset_clean <- dataset[complete.cases(dataset),]
-dim(dataset_clean)
-dim(dataset)
 write.csv(dataset_clean, "./data/clean_data.csv", row.names = FALSE)
 ```
 
+##Read clean dataset.
 ```{r, include = FALSE}
 dataset_clean <- read.csv("./data/clean_data.csv")
 unique(dataset_clean$P1_DOB)
-
 ```
 
-##Change format of DOB
-
+## convert the Date of birth column to Year of birth.
 ```{r, include = FALSE}
+#Change format of DOB
 # Load the lubridate package
 library(lubridate)
 
@@ -79,10 +48,6 @@ dataset_clean$P1_DOB <- dmy(dataset_clean$P1_DOB)  # Assumes day-month-year form
 
 unique(dataset_clean$P1_DOB)
 
-```
-
-
-```{r, include = FALSE}
 # Extract the year from the date column
 dataset_clean$year <- year(dataset_clean$P1_DOB)
 
@@ -90,19 +55,11 @@ dataset_clean$year <- year(dataset_clean$P1_DOB)
 unique(dataset_clean$year)
 ```
 
-
-
+##Define Range of ages
 ```{r, include = FALSE}
-# Sort the numbers in ascending order
-sorted_numbers <- sort(unique(dataset_clean$year))
-
 # Print the sorted numbers
-print(sorted_numbers)
+print(sort(unique(dataset_clean$year)))
 
-```
-
-
-```{r, include = FALSE}
 # Define the ranges and corresponding AVGsalary values
 ranges <- c(1890, 1895, 1900, 1905, 1910, 1915, 1920, 1925, 1930, 1935, 1940, 1945, 1950, 1955, 1960, 1965, 1970, 1975, 1980, 1985, 1990)
 
@@ -333,4 +290,55 @@ library(dplyr)
 
 ```
 
+```{r, include = FALSE}
 
+NN <- list(
+  "nx" = nx, # Number of input covariates
+  "ny" = ny, # Number of output responses
+  "batchSizeList" = c(1, 1, 1), # Batch size [train, val, test]
+  "nodes" = c(nx, 30, ny), # Number of nodes for each layer
+  "sx" = NULL, # Input standard deviation
+  "sv" = 0.32, # Observations standard deviation
+  "maxEpoch" = 10, # maximal number of learning epoch
+  "hiddenLayerActivation" = "relu", # Activation function for hidden layer {'tanh','sigm','cdf','relu','softplus'}
+  "outputActivation" = "linear", # Activation function for hidden layer {'linear', 'tanh','sigm','cdf','relu'}
+  "ratio" = 0.8, # Ratio between training set and validation set
+  "numSplits" = 4, # Number of splits
+  "task" = "regression" # Task regression or classification
+)
+```
+
+```{r, include = FALSE}
+# initialize weights and biases and parameters for the split between training and testing set.
+# Factor for initializing bias
+NN$factor4Bp = 0.01 * matrix(1L, nrow = 1, ncol = length(NN$nodes) - 1) 
+# Factor for initializing weights
+NN$factor4Wp = 0.25 * matrix(1L, nrow = 1, ncol = length(NN$nodes) - 1)
+
+trainIdx <- NULL
+testIdx <- NULL
+```
+
+
+```{r, include = FALSE}
+### Experiment
+
+# Run the neural network model and collect metrics at each epoch.
+out_regression <- tagi::regression(NN, x, y, trainIdx, testIdx)
+```
+
+```{r, include = FALSE}
+
+```
+
+```{r, include = FALSE}
+
+```
+
+```{r, include = FALSE}
+
+```
+
+```{r, include = FALSE}
+
+```
