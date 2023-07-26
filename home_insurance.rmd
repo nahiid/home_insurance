@@ -37,6 +37,29 @@ dataset_clean <- read.csv("./data/clean_data.csv")
 unique(dataset_clean$P1_DOB)
 ```
 
+##Reanming Columns
+```{r, include = FALSE}
+# Define the new column names
+new_column_names <- c(
+  "Claim_3_Years", "Employment_Status", "Business_Use", "Risk_Rated_Area_B",
+  "Sum_Insured_Buildings", "NCD_Granted_Years_B", "NCD_Granted_Years_C",
+  "Buildings_Cover", "Spec_Sum_Insured", "Spec_Item_Premium", "Unspec_HRP_Premium",
+  "Date_of_Birth", "Marital_Status", "Sex", "Approved_Alarm", "Approved_Locks",
+  "Bedrooms", "Roof_Construction", "Wall_Construction", "Flood_Risk",
+  "Max_Days_Unoccupied", "Neighborhood_Watch", "Occupation_Status", "Security_Installed",
+  "Security_Discount_Required", "Subsidence_Risk", "Year_Built", "Garden_Addon_Pre_Renovation",
+  "Garden_Addon_Post_Renovation", "Last_Annual_Premium_Gross", "Policy_Status",
+  "Record_ID", "Police_Station", "Year_of_Birth"
+)
+
+# Rename the columns
+colnames(dataset_clean) <- new_column_names
+
+# Checking updated column names
+names(dataset_clean)
+```
+
+
 ## convert the Date of birth column to Year of birth.
 ```{r, include = FALSE}
 #Change format of DOB
