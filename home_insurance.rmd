@@ -89,13 +89,24 @@ dataset_clean <- subset(dataset_clean, select = -c(Year_of_Birth))
 
 # check the updated dataset
 head(dataset_clean)  # View the first few rows to verify the changes.
-
 ```
+
+
+##Remove rows which include meaningless values
+```{r, include = FALSE}
+dataset_clean <- dataset_clean[!(dataset_clean$Employment_Status %in% c("A", "C", "I", "N")), ]
+```
+
 
 ##Define Range of ages
 ```{r, include = FALSE}
 # Print the sorted numbers
-print(sort(unique(dataset_clean$Age)))
+sort(unique(dataset_clean$Age))
+unique(dataset_clean$Bedrooms)
+unique(dataset_clean$Employment_Status)
+unique(dataset_clean$Occupation_Status)
+unique(dataset_clean$Garden_Addon_Pre_Renovation)
+unique(dataset_clean$Business_Use)
 ```
 
 ```{r, include = FALSE}
