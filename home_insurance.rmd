@@ -141,13 +141,17 @@ dataset_clean$Approx_Salary <- calculate_total_rate(dataset_clean$Age,
                                                     dataset_clean$Garden_Addon_Pre_Renovation,
                                                     dataset_clean$Occupation_Status)
 
-# Define mapping of total rate to salary ranges (you can customize this based on your specific needs)
+# Convert the Approx_Salary_Rate column to numeric
+dataset_clean$Approx_Salary <- as.numeric(dataset_clean$Approx_Salary)
+
+
+# Define mapping of total rate to approximate annual salary in thousands (K)
 salary_ranges <- cut(dataset_clean$Approx_Salary,
-                     breaks = c(0, 12, 16, Inf),
-                     labels = c("Low", "Medium", "High"))
+                     breaks = c(0, 8, 12, 16, 20, Inf),
+                     labels = c("Less than 8K", "8K - 12K", "12K - 16K", "16K - 20K", "More than 20K"))
 
 # Add the salary range column to the dataframe
-dataset_clean$Salary_Range <- salary_ranges
+dataset_clean$Approx_Salary_Annual_K <- salary_ranges
 
 # Print the resulting dataframe with the approximate salary and salary range
 print(dataset_clean)
