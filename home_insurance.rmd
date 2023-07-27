@@ -80,7 +80,7 @@ names(dataset_clean)
 
 ##Add age for each client
 ```{r, include = FALSE}
-# Calculate the age for each client as of 2023
+# Calculate the age for each client as of 2000
 current_year <- 2007
 dataset_clean$Age <- current_year - dataset_clean$Year_of_Birth
 
@@ -133,7 +133,6 @@ calculate_total_rate <- function(age, emp_status, bus_use, bedrooms, garden_add,
   return(total_rate)
 }
 
-# Example usage with the "dataset_clean" dataframe
 dataset_clean$Approx_Salary <- calculate_total_rate(dataset_clean$Age,
                                                     dataset_clean$Employment_Status,
                                                     dataset_clean$Business_Use,
@@ -157,7 +156,7 @@ dataset_clean$Approx_Salary_Annual_K <- salary_ranges
 print(dataset_clean)
 
 ```
-
+##UP TO HERE####################################
 
 
 ```{r, include = FALSE}
