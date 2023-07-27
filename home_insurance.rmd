@@ -37,29 +37,6 @@ dataset_clean <- read.csv("./data/clean_data.csv")
 unique(dataset_clean$P1_DOB)
 ```
 
-##Reanming Columns
-```{r, include = FALSE}
-# Define the new column names
-new_column_names <- c(
-  "Claim_3_Years", "Employment_Status", "Business_Use", "Risk_Rated_Area_B",
-  "Sum_Insured_Buildings", "NCD_Granted_Years_B", "NCD_Granted_Years_C",
-  "Buildings_Cover", "Spec_Sum_Insured", "Spec_Item_Premium", "Unspec_HRP_Premium",
-  "Date_of_Birth", "Marital_Status", "Sex", "Approved_Alarm", "Approved_Locks",
-  "Bedrooms", "Roof_Construction", "Wall_Construction", "Flood_Risk",
-  "Max_Days_Unoccupied", "Neighborhood_Watch", "Occupation_Status", "Security_Installed",
-  "Security_Discount_Required", "Subsidence_Risk", "Year_Built", "Garden_Addon_Pre_Renovation",
-  "Garden_Addon_Post_Renovation", "Last_Annual_Premium_Gross", "Policy_Status",
-  "Record_ID", "Police_Station", "Year_of_Birth"
-)
-
-# Rename the columns
-colnames(dataset_clean) <- new_column_names
-
-# Checking updated column names
-names(dataset_clean)
-```
-
-
 ## convert the Date of birth column to Year of birth.
 ```{r, include = FALSE}
 #Change format of DOB
@@ -78,17 +55,47 @@ dataset_clean$year <- year(dataset_clean$P1_DOB)
 unique(dataset_clean$year)
 ```
 
+##Reanming Columns
+```{r, include = FALSE}
+# Define the new column names
+new_column_names <- c(
+  "Claim_3_Years", "Employment_Status", "Business_Use", "Risk_Rated_Area_B",
+  "Sum_Insured_Buildings", "NCD_Granted_Years_B", "NCD_Granted_Years_C",
+  "Buildings_Cover", "Spec_Sum_Insured", "Spec_Item_Premium", "Unspec_HRP_Premium",
+  "Date_of_Birth", "Marital_Status", "Sex", "Approved_Alarm", "Approved_Locks",
+  "Bedrooms", "Roof_Construction", "Wall_Construction", "Flood_Risk",
+  "Max_Days_Unoccupied", "Neighborhood_Watch", "Occupation_Status", "Security_Installed",
+  "Security_Discount_Required", "Subsidence_Risk", "Year_Built", "Garden_Addon_Pre_Renovation",
+  "Garden_Addon_Post_Renovation", "Last_Annual_Premium_Gross", "Policy_Status",
+  "Record_ID", "Police_Station", "Year_of_Birth"
+)
+
+# Rename the columns
+colnames(dataset_clean) <- new_column_names
+
+# Check the updated column names
+names(dataset_clean)
+
+```
+
+##Add age for each client
+```{r, include = FALSE}
+# Calculate the age for each client as of 2023
+current_year <- 2007
+dataset_clean$Age <- current_year - dataset_clean$Year_of_Birth
+
+# Remove the "Year_of_Birth" column
+dataset_clean <- subset(dataset_clean, select = -c(Year_of_Birth))
+
+# check the updated dataset
+head(dataset_clean)  # View the first few rows to verify the changes.
+
+```
+
 ##Define Range of ages
 ```{r, include = FALSE}
 # Print the sorted numbers
-print(sort(unique(dataset_clean$year)))
-
-# Define the ranges and corresponding AVGsalary values
-ranges <- c(1890, 1895, 1900, 1905, 1910, 1915, 1920, 1925, 1930, 1935, 1940, 1945, 1950, 1955, 1960, 1965, 1970, 1975, 1980, 1985, 1990)
-
-# Corresponding AVGsalary values for each range
-AVGsalary_values <- c(200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10)
-
+print(sort(unique(dataset_clean$Age)))
 ```
 
 ```{r, include = FALSE}
